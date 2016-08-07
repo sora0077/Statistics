@@ -10,6 +10,10 @@
 		D9659A8D1D573FD70087CA8A /* Statistics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9659A831D573FD60087CA8A /* Statistics.framework */; };
 		D9659A921D573FD70087CA8A /* StatisticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9659A911D573FD70087CA8A /* StatisticsTests.swift */; };
 		D9659A941D573FD70087CA8A /* Statistics.h in Headers */ = {isa = PBXBuildFile; fileRef = D9659A861D573FD60087CA8A /* Statistics.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9659AA01D57400C0087CA8A /* LaunchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9659A9E1D57400C0087CA8A /* LaunchManager.swift */; };
+		D9659AA11D57400C0087CA8A /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9659A9F1D57400C0087CA8A /* Statistics.swift */; };
+		D9659AA51D574ACC0087CA8A /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9659AA31D574ACC0087CA8A /* Realm.framework */; };
+		D9659AA61D574ACC0087CA8A /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9659AA41D574ACC0087CA8A /* RealmSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +33,10 @@
 		D9659A8C1D573FD70087CA8A /* StatisticsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StatisticsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9659A911D573FD70087CA8A /* StatisticsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsTests.swift; sourceTree = "<group>"; };
 		D9659A931D573FD70087CA8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9659A9E1D57400C0087CA8A /* LaunchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchManager.swift; sourceTree = "<group>"; };
+		D9659A9F1D57400C0087CA8A /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		D9659AA31D574ACC0087CA8A /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
+		D9659AA41D574ACC0087CA8A /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +44,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9659AA61D574ACC0087CA8A /* RealmSwift.framework in Frameworks */,
+				D9659AA51D574ACC0087CA8A /* Realm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,8 +63,10 @@
 		D9659A791D573FD60087CA8A = {
 			isa = PBXGroup;
 			children = (
+				D9659A9D1D57400C0087CA8A /* Sources */,
 				D9659A851D573FD60087CA8A /* Statistics */,
 				D9659A901D573FD70087CA8A /* StatisticsTests */,
+				D9659AA21D574AAB0087CA8A /* Frameworks */,
 				D9659A841D573FD60087CA8A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,6 +96,24 @@
 				D9659A931D573FD70087CA8A /* Info.plist */,
 			);
 			path = StatisticsTests;
+			sourceTree = "<group>";
+		};
+		D9659A9D1D57400C0087CA8A /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D9659A9E1D57400C0087CA8A /* LaunchManager.swift */,
+				D9659A9F1D57400C0087CA8A /* Statistics.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		D9659AA21D574AAB0087CA8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9659AA31D574ACC0087CA8A /* Realm.framework */,
+				D9659AA41D574ACC0087CA8A /* RealmSwift.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +230,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9659AA11D57400C0087CA8A /* Statistics.swift in Sources */,
+				D9659AA01D57400C0087CA8A /* LaunchManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +357,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Statistics/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -343,6 +379,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Statistics/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
