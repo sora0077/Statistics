@@ -25,6 +25,10 @@ final class Launch: RealmSwift.Object {
     private dynamic var launchAt = Date()
     
     dynamic var startupTime: Double = 0
+    
+    override class func primaryKey() -> String? {
+        return "uuid"
+    }
 }
 
 
@@ -39,7 +43,13 @@ final class LaunchManager {
 
     private init(uuid: String) {
         self.uuid = uuid
-        
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func setup() throws {
         let nc = NotificationCenter.default
         
         let observes: [Notification.Name: Selector] = [
@@ -47,13 +57,15 @@ final class LaunchManager {
                 #selector(self.applicationDidBecomeActive(notification:)),
             .UIApplicationDidEnterBackground:
                 #selector(self.applicationDidEnterBackground(notification:)),
+            .UIApplicationWillTerminate:
+                #selector(self.applicationWillTerminate(notification:))
         ]
         for (name, sel) in observes {
             nc.addObserver(self, selector: sel, name: name, object: nil)
         }
         
-        let realm = statisticsRealm()
-        try! realm.write {
+        let realm = try statisticsRealm()
+        try realm.write {
             let launch = Launch()
             launch.uuid = uuid
             launch.appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -66,19 +78,25 @@ final class LaunchManager {
     
     @objc
     private func applicationDidBecomeActive(notification: Notification) {
-        print(#function)
         activeAt = Date()
     }
     
     @objc
     private func applicationDidEnterBackground(notification: Notification) {
-        print(#function)
         
-        let realm = statisticsRealm()
-        if let launch = realm.object(ofType: Launch.self, forPrimaryKey: uuid) {
-            try! realm.write {
-                launch.startupTime = Date().timeIntervalSince(activeAt)
+        do {
+            let realm = try statisticsRealm()
+            if let launch = realm.object(ofType: Launch.self, forPrimaryKey: uuid) {
+                try realm.write {
+                    launch.startupTime = Date().timeIntervalSince(activeAt)
+                }
             }
+        } catch {
+            
         }
+    }
+    
+    @objc
+    private func applicationWillTerminate(notification: Notification) {
     }
 }

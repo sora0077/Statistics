@@ -11,28 +11,31 @@ import RealmSwift
 
 
 public struct LaunchOptions {
+    public var encryptionKey: Data?
     
+    public init() {}
 }
 
-private func configuration() -> Realm.Configuration {
+private var launchOptions: LaunchOptions!
+
+public func launch(with options: LaunchOptions = LaunchOptions()) throws {
+    launchOptions = options
+    try LaunchManager.shared.setup()
+}
+
+public func statisticsRealm() throws -> Realm {
+    let realm = try Realm(configuration: configuration)
+    return realm
+}
+
+private let configuration: Realm.Configuration = {
     let path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)[0]
     // swiftlint:disable force_try
     let fileURL = try! URL(fileURLWithPath: path).appendingPathComponent("statistics.realm")
-    var config = Realm.Configuration(fileURL: fileURL)
+    var config = Realm.Configuration(fileURL: fileURL, encryptionKey: launchOptions.encryptionKey)
     config.objectTypes = [
         Launch.self,
     ]
     
     return config
-}
-
-public func launch(with options: Any? = nil) {
-    
-    _ = LaunchManager.shared
-    
-}
-
-func statisticsRealm() -> Realm {
-    let realm = try! Realm(configuration: configuration())
-    return realm
-}
+}()
